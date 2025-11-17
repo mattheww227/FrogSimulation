@@ -11,32 +11,41 @@ public class FrogSimulation
 
     private int hopDistance()
     {
-        if (Math.random() < 0.5)
+        if (Math.random() < 0.75)
         {
-            return (int) Math.random() * 10 + 1;
+            return (int) (Math.random() * 10) + 1;
         }
-        return (int) Math.random() * -5 - 1;
+        return ((int) (Math.random() * 5) + 1) * -1;
     }
 
     public boolean simulate()
     {
         int position = 0;
-        int numHops = 0;
         for (int i = 0; i < maxHops; i++)
         {
             position += hopDistance();
-            numHops++;
-            if (position < 0 || numHops > maxHops) return false;
-        }
-        if (position >= goalDistance)
-        {
-            return true;
+            if (position < 0)
+            {
+                return false;
+            }
+            if (position >= goalDistance)
+            {
+                return true;
+            }
         }
         return false;
     }
 
     public double runSimulations(int num)
     {
-        return 0.0;
+        int success = 0;
+        for (int i = 0; i < num; i++)
+        {
+           if (simulate() == true)
+           {
+               success++;
+           }
+        }
+        return (double) success / num;
     }
 }
